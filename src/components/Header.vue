@@ -16,12 +16,12 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
   .container {
-    height: 100px;
+    height: 90px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 30px;
-    margin-top: 16px;
+    padding: 0 30px 0 30px;
+    margin-top: 10px;
   }
 
   #todo {

@@ -2,25 +2,42 @@
   <div class="container">
     <div class="checkbox">
     </div>
-    <div contenteditable="true">
-      <p>Create a new todo...</p>
+    <div class="input-container" @keyup.enter="inputValidation">
+      <input v-model="content" type="text" placeholder="Create a new todo..." id="todoInput"/>
     </div>
   </div>
 </template>
 
 <script>
+
+
 export default {
   name: "InputCard",
-};
+  data() {
+    return {
+      content: "",
+      input: null,
+    }},
+  methods: {
+    inputValidation() {
+      if (this.content.trim() === "") return // Don't add the task if it's empty
+
+      this.$emit('addCard', this.content);
+      this.content = "";
+    }
+  },
+}
 </script>
 
 <style scoped lang="scss">
+$backgroundColor: hsl(235, 24%, 19%);
+
 .container {
   display: flex;
   align-items: center;
-  background-color: hsl(235, 24%, 19%);
+  background-color: $backgroundColor;
   width: 85%;
-  height: 60px;
+  height: 70px;
   border-radius: 10px;
   align-self: center;
 }
@@ -32,5 +49,17 @@ export default {
   border-radius: 100%;
   margin-left: 20px;
   margin-right: 20px;
+  cursor: pointer;
+}
+
+input {
+  background-color: $backgroundColor;
+  color: hsl(234, 11%, 52%);
+  border: none;
+  width: 100%;
+}
+
+.input-container {
+  width: 75%;
 }
 </style>
