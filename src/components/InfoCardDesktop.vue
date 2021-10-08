@@ -64,24 +64,23 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$backgroundColor: hsl(235, 24%, 19%);
 
 .container {
   display: flex;
   justify-content: space-between;
   position: relative;
-  background-color: $backgroundColor;
+  background-color: var(--card-color);
   width: 100%;
   min-height: 70px;
   align-items: center;
-  color: hsl(233, 14%, 35%)
+  color: hsl(236, 9%, 61%)
 }
 
 .clear {
   margin-left: auto;
   cursor: pointer;
   > :hover {
-    color: white;
+    color: var(--hover-text);
   }
   width: 33%;
   text-align: right;
@@ -99,7 +98,7 @@ $backgroundColor: hsl(235, 24%, 19%);
   font-size: 20px;
 
   &:hover {
-    color: white;
+    color: var(--hover-text);
     cursor: pointer;
   }
 }
@@ -122,7 +121,8 @@ $backgroundColor: hsl(235, 24%, 19%);
 @media screen and (max-width: 960px) {
   .container {
     position: absolute;
-    left: 99999px;
+    display: none;
+    z-index: -5;
   }
 }
 

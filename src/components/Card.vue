@@ -19,13 +19,11 @@
 
 
 <style scoped lang="scss">
-$backgroundColor: hsl(235, 24%, 19%);
-
 .container {
   position: relative;
   display: flex;
   align-items: center;
-  background-color: $backgroundColor;
+  background-color: var(--card-color);
   width: 100%;
   min-height: 70px;
 }
@@ -56,8 +54,8 @@ $backgroundColor: hsl(235, 24%, 19%);
 }
 
 p {
-  background-color: $backgroundColor;
-  color: hsl(234, 39%, 85%);
+  background-color: var(card-color);
+  color: var(--task-text);
   width: 100%;
 }
 
@@ -73,7 +71,8 @@ p {
 
 .checked {
   .checkbox-container .checkbox {
-    background: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%))
+    background: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+    z-index: 1;
   }
 
   .checkbox-container .checkbox .checkbox-bg {
@@ -81,10 +80,11 @@ p {
     height: 100%;
     background-size: 15px;
     background: url("../assets/icon-check.svg") no-repeat center;
+    z-index: 2;
   }
 
   .content p {
-    color: hsl(234, 11%, 52%);
+    color: var(--checked-content);
     text-decoration: line-through;
   }
 

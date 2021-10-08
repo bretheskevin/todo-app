@@ -12,7 +12,7 @@
     justify-content: center;
     margin-top: auto;
     width: 100%;
-    color: hsl(233, 14%, 35%);
+    color: hsl(236, 9%, 61%);
     font-size: 14px;
   }
 

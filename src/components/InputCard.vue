@@ -30,12 +30,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$backgroundColor: hsl(235, 24%, 19%);
 
 .container {
   display: flex;
   align-items: center;
-  background-color: $backgroundColor;
+  background-color: var(--card-color);
   width: 85%;
   height: 70px;
   border-radius: 10px;
@@ -53,8 +52,8 @@ $backgroundColor: hsl(235, 24%, 19%);
 }
 
 input {
-  background-color: $backgroundColor;
-  color: hsl(234, 11%, 52%);
+  background-color: var(--card-color);
+  color: var(--input-color);
   border: none;
   width: 100%;
 }

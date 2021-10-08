@@ -2,7 +2,7 @@
   <div id="app">
     <div class="background" />
     <div class="main-container">
-      <Header />
+      <Header @toggleTheme="toggleTheme"/>
       <InputCard @addCard="addCard($event)"/>
       <div class="card-container">
         <Card v-for="item in todoToShow" :key="item.id"
@@ -95,6 +95,16 @@ export default {
           this.todoToShow = this.todoCompleted;
           break;
       }
+    },
+    toggleTheme() {
+      if (localStorage.getItem("theme") === "dark") {
+        localStorage.setItem("theme", "light");
+        document.body.setAttribute("data-theme", "light");
+      } else {
+        localStorage.setItem("theme", "dark");
+        document.body.setAttribute("data-theme", "dark");
+
+      }
     }
   },
   computed: {
@@ -105,12 +115,24 @@ export default {
       return this.todo.length === 0 ? 0 : this.todo[this.todo.length - 1].id + 1;
     }
   },
-  beforeMount() {
+  mounted() {
+    if (localStorage.getItem("theme") === null) {
+      localStorage.setItem("theme", "dark");
+    } else {
+      this.theme = localStorage.getItem("theme");
+    }
     if (localStorage.getItem("todo") === null) {
       localStorage.setItem("todo", []);
     } else {
       this.todo = JSON.parse(localStorage.getItem("todo"));
       this.todoToShow = this.todo;
+    }
+  },
+  beforeUpdate() {
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.setAttribute("data-theme", "dark");
+    } else {
+      document.body.setAttribute("data-theme", "light");
     }
   },
   watch: {
@@ -135,6 +157,8 @@ export default {
 </script>
 
 <style lang="scss">
+
+
 #app {
   font-family: "Josefin Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -145,8 +169,35 @@ export default {
   flex-direction: column;
 }
 
+body[data-theme="dark"] {
+  --background-color: hsl(235, 21%, 11%);
+  --background-image-mobile: url("./assets/bg-mobile-dark.jpg");
+  --background-image-desktop: url("./assets/bg-desktop-dark.jpg");
+  --theme-icon: url("./assets/icon-sun.svg");
+  --card-color: hsl(235, 24%, 19%);
+  --task-text:  hsl(234, 39%, 85%);
+  --info-card-text: hsl(236, 9%, 61%);
+  --input-color: hsl(234, 11%, 52%);
+  --checked-content: hsl(233, 14%, 35%);
+  --hover-text: white;
+}
+
+body[data-theme="light"] {
+  --background-color: hsl(236, 33%, 92%);
+  --background-image-mobile: url("./assets/bg-mobile-light.jpg");
+  --background-image-desktop: url("./assets/bg-desktop-light.jpg");
+  --theme-icon: url("./assets/icon-moon.svg");
+  --card-color: hsl(0, 0%, 98%);
+  --task-text: hsl(235, 19%, 35%);
+  --info-card-text: hsl(236, 9%, 61%);
+  --input-color: black;
+  --checked-content: hsl(233, 11%, 84%);
+  --hover-text: black;
+}
+
 body {
-  background: hsl(235, 21%, 11%);
+  background: var(--background-color);
+  overflow-x: hidden;
 }
 
 .background {
@@ -154,7 +205,7 @@ body {
   width: 100%;
   position: absolute;
   z-index: -1;
-  background: url("./assets/bg-mobile-dark.jpg") no-repeat;
+  background: var(--background-image-mobile) no-repeat;
   background-size: cover;
 }
 
@@ -196,7 +247,7 @@ body {
   }
 
   .background {
-    background: url("./assets/bg-desktop-dark.jpg") no-repeat;
+    background: var(--background-image-desktop) no-repeat;
     background-size: cover;
     height: 300px;
   }

@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <p id="todo">TODO</p>
-    <div id="dark-mode">
-      <img src="../assets/icon-sun.svg" alt="dark mode" height="20" class="theme-logo"/>
+    <div id="theme" @click="$emit('toggleTheme')">
+<!--      <img src="../assets/icon-sun.svg" alt="theme" height="20" class="theme-logo"/>-->
     </div>
   </div>
 </template>
@@ -31,7 +31,14 @@ export default {
     font-size: 26px;
   }
 
-  #dark-mode:hover {
+  #theme {
+    height: 26px;
+    width: 26px;
+    background: var(--theme-icon) no-repeat;
+    margin-right: 22px;
+  }
+
+  #theme:hover {
     cursor: pointer;
   }
 

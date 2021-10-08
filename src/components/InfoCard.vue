@@ -11,15 +11,14 @@
 
 
 <style scoped lang="scss">
-$backgroundColor: hsl(235, 24%, 19%);
 
 .container {
   position: relative;
-  background-color: $backgroundColor;
+  background-color: var(--card-color);
   width: 100%;
   min-height: 70px;
   align-items: center;
-  color: hsl(233, 14%, 35%);
+  color: var(--info-card-text);
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
@@ -29,7 +28,7 @@ $backgroundColor: hsl(235, 24%, 19%);
   margin-right: 20px;
   cursor: pointer;
   > :hover {
-    color: white;
+    color: var(--hover-text);
   }
 }
 
@@ -40,7 +39,8 @@ $backgroundColor: hsl(235, 24%, 19%);
 @media screen and (min-width: 961px) {
   .container {
     position: absolute;
-    left: 99999px;
+    display: none;
+    z-index: -5;
   }
 }
 

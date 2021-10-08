@@ -61,12 +61,12 @@ export default {
 .container {
   display: flex;
   justify-content: center;
-  background-color: hsl(235, 24%, 19%);
+  background-color: var(--card-color);
   width: 85%;
   min-height: 70px;
   align-items: center;
   align-self: center;
-  color: hsl(233, 14%, 35%);
+  color: var(--info-card-text);
   border-radius: 10px;
   margin-bottom: 10px;
 }
@@ -77,7 +77,7 @@ export default {
   font-size: 20px;
 
   &:hover {
-    color: white;
+    color: var(--hover-text);
     cursor: pointer;
   }
 }
