@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="checkbox">
+    <div class="checkbox" @click="inputValidation">
     </div>
     <div class="input-container" @keyup.enter="inputValidation">
       <input v-model="content" type="text" placeholder="Create a new todo..." id="todoInput"/>

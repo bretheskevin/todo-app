@@ -68,6 +68,26 @@ p {
 .delete {
   margin-left: auto;
   margin-right: 15px;
+  cursor: pointer;
 }
 
+.checked {
+  .checkbox-container .checkbox {
+    background: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%))
+  }
+
+  .checkbox-container .checkbox .checkbox-bg {
+    width: 100%;
+    height: 100%;
+    background-size: 15px;
+    background: url("../assets/icon-check.svg") no-repeat center;
+  }
+
+  .content p {
+    color: hsl(234, 11%, 52%);
+    text-decoration: line-through;
+  }
+
+
+}
 </style>

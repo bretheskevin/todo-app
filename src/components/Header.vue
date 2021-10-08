@@ -2,7 +2,7 @@
   <div class="container">
     <p id="todo">TODO</p>
     <div id="dark-mode">
-      <img src="../assets/icon-sun.svg" alt="dark mode" height="20"/>
+      <img src="../assets/icon-sun.svg" alt="dark mode" height="20" class="theme-logo"/>
     </div>
   </div>
 </template>
@@ -33,5 +33,22 @@ export default {
 
   #dark-mode:hover {
     cursor: pointer;
+  }
+
+  @media screen and (min-width: 960px) {
+    .container {
+      margin-top: 40px;
+    }
+
+    #todo {
+      font-size: 40px;
+      letter-spacing: 20px;
+      margin-left: 20px;
+    }
+
+    .theme-logo {
+      height: 30px;
+      margin-right: 20px;
+    }
   }
 </style>

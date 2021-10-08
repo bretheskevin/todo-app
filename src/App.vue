@@ -1,23 +1,30 @@
 <template>
   <div id="app">
     <div class="background" />
-    <Header />
-    <InputCard @addCard="addCard($event)"/>
-    <div class="card-container">
-      <Card v-for="item in todo" :key="item.id"
-            @deleteCard="deleteCard(item.id)"
-            @checkCard="checkCard(item.id)"
-            v-bind:class="{checked: item.isChecked}"
-      >
-        <template v-slot:content>
-          <p>{{ item.content }}</p>
-        </template>
-      </Card>
-      <InfoCard @clearCompletedTodo="clearCompletedTodo()">
-      <p>{{ numberOfTask }} item{{ numberOfTask > 1 ? "s" : null }} left</p>
-      </InfoCard>
+    <div class="main-container">
+      <Header />
+      <InputCard @addCard="addCard($event)"/>
+      <div class="card-container">
+        <Card v-for="item in todoToShow" :key="item.id"
+              @deleteCard="deleteCard(item.id)"
+              @checkCard="checkCard(item.id)"
+              :class="{checked: item.isChecked}"
+        >
+          <template v-slot:content>
+            <p>{{ item.content }}</p>
+          </template>
+        </Card>
+        <InfoCard @clearCompletedTodo="clearCompletedTodo">
+        <p>{{ numberOfTask }} item{{ numberOfTask > 1 ? "s" : null }} left</p>
+        </InfoCard>
+        <InfoCardDesktop @clearCompletedTodo="clearCompletedTodo" @filterTheCards="filterTheCards">
+          <p>{{ numberOfTask }} item{{ numberOfTask > 1 ? "s" : null }} left</p>
+        </InfoCardDesktop>
+      </div>
+      <FilterCard @filterTheCards="filterTheCards" />
+
+      <Footer />
     </div>
-    <Footer />
   </div>
 </template>
 
@@ -27,6 +34,8 @@ import InputCard from "./components/InputCard.vue";
 import Card from "./components/Card.vue";
 import Footer from "./components/Footer.vue";
 import InfoCard from "./components/InfoCard.vue";
+import FilterCard from "./components/FilterCard.vue";
+import InfoCardDesktop from "./components/InfoCardDesktop.vue";
 
 export default {
   name: "App",
@@ -35,11 +44,17 @@ export default {
     InputCard,
     Footer,
     Card,
-    InfoCard
+    InfoCard,
+    FilterCard,
+    InfoCardDesktop
   },
   data() {
     return {
       todo: [],
+      todoCompleted: [],
+      todoActive: [],
+      todoToShow: [],
+      actualFilter: "All",
     }
   },
   methods: {
@@ -53,8 +68,7 @@ export default {
           if (item.id === cardToCheckId) {
             item.isChecked = !item.isChecked
           }
-      }
-      );
+      });
     },
     addCard(inputContent) {
       this.todo.push({
@@ -63,16 +77,29 @@ export default {
         isChecked: false,
       })
     },
-
     clearCompletedTodo() {
       this.todo = this.todo.filter( ({isChecked}) =>
           isChecked === false
       );
+    },
+    filterTheCards(filterName) {
+      this.actualFilter = filterName;
+      switch (filterName) {
+        case "All":
+          this.todoToShow = this.todo;
+          break;
+        case "Active":
+          this.todoToShow = this.todoActive;
+          break;
+        case "Completed":
+          this.todoToShow = this.todoCompleted;
+          break;
+      }
     }
   },
   computed: {
     numberOfTask() {
-      return this.todo.length;
+      return this.todoToShow.length;
     },
     nextId() {
       return this.todo.length === 0 ? 0 : this.todo[this.todo.length - 1].id + 1;
@@ -83,11 +110,25 @@ export default {
       localStorage.setItem("todo", []);
     } else {
       this.todo = JSON.parse(localStorage.getItem("todo"));
+      this.todoToShow = this.todo;
     }
   },
   watch: {
-    todo() {
-      localStorage.setItem("todo", JSON.stringify(this.todo));
+    todo: {
+      handler() {
+        localStorage.setItem("todo", JSON.stringify(this.todo));
+
+        this.todoCompleted = this.todo.filter( ({isChecked}) =>
+            isChecked
+        );
+
+        this.todoActive = this.todo.filter( ({isChecked}) =>
+            isChecked === false
+        );
+
+        this.filterTheCards(this.actualFilter);
+      },
+      deep: true
     },
   }
 };
@@ -123,7 +164,7 @@ body {
   display: flex;
   flex-direction: column;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   height: 58vh;
   overflow: scroll;
 
@@ -140,25 +181,26 @@ body {
     border-bottom-right-radius: $radius;
   }
 }
+</style>
 
-.checked {
-  .checkbox-container .checkbox {
-    background: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%))
-  }
-
-  .checkbox-container .checkbox .checkbox-bg {
-    width: 100%;
-    height: 100%;
-    background-size: 15px;
-    background: url("assets/icon-check.svg") no-repeat center;
-  }
-
-  .content p {
-    color: hsl(234, 11%, 52%);
-    text-decoration: line-through;
-  }
+<style scoped lang="scss">
+.main-container {
+  display: flex;
+  flex-direction: column;
 }
 
+@media screen and (min-width: 960px) {
+  .main-container {
+    align-self: center;
+    width: 50%;
+  }
+
+  .background {
+    background: url("./assets/bg-desktop-dark.jpg") no-repeat;
+    background-size: cover;
+    height: 300px;
+  }
+}
 </style>
 
 <style>
